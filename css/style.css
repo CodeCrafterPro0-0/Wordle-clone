@@ -119,7 +119,12 @@ body {
     background-color: #3a3a3c;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 500px) {
+    .game-container {
+        gap: 20px;
+        padding: 10px;
+    }
+
     .tile {
         width:52px;
         height: 52px;
