@@ -72,7 +72,7 @@ function checkGuess(guess) {
 
     if (guess === answer) {
         setTimeout(() => {
-            alert(`You Won! the word was : ${answer}`);
+            showPopup(`You Won! the word was : ${answer}`);
         }, 100);
         return;
     }
@@ -82,7 +82,7 @@ function checkGuess(guess) {
 
     if (currentRow === 6) {
         setTimeout(() => {
-            alert(`Game Over ! Word was ${answer}`)
+            showPopup(`Game Over ! Word was ${answer}`);
         }, 100);
     }
 }

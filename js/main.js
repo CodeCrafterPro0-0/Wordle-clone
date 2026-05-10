@@ -21,3 +21,19 @@ keys.forEach((key) => {
         }
     })
 });
+
+const popup = document.getElementById("popup");
+
+const popupMessage = document.getElementById("popup-message");
+
+const newGameBtn = document.getElementById("new-game-btn");
+
+function showPopup(message) {
+    popupMessage.textContent = message;
+
+    popup.classList.remove("hidden");
+}
+
+newGameBtn.addEventListener("click", () => {
+    location.reload();
+})
