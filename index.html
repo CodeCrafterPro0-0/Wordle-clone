@@ -9,9 +9,31 @@
     <link rel="stylesheet" href="./css/keyboard.css">
 </head>
 <body>
-    <main class="game-container">
+    <div class="start-menu">
+        <h1>Wordle</h1>
+
+        <div class="btn">
+            <select name="mode" id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="hard">Hard</option>
+                <option value="hardcore">Hardcore</option>
+            </select><br>
+            <button id="start">Start</button>
+        </div>
+    </div>
+
+    <main class="game-container hidden" id="game-container">
 
         <h1 class="title">Wordle</h1>
+
+        <div class="hint-container">
+            <p id="hint-text">
+                Hints Left: 0
+            </p>
+
+            <button id="hint-btn">Hint</button>
+        </div>
 
         <section class="board" id="board">
             <div class="row">

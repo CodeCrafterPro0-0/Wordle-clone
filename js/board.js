@@ -1,9 +1,8 @@
-function addLetter(letter){
-    if (currentCol <5) {
+function addLetter(letter) {
+    if (currentCol < 5) {
         const tile = rows[currentRow].children[currentCol];
 
         tile.textContent = letter;
-
         tile.classList.add("pop");
 
         setTimeout(() => {
@@ -14,75 +13,102 @@ function addLetter(letter){
     }
 }
 
+function addLetterAt(index, letter) {
+    const tile = rows[currentRow].children[index];
+
+    tile.textContent = letter;
+    tile.dataset.hinted = "true";
+    tile.classList.add("pop", "hinted");
+
+    setTimeout(() => {
+        tile.classList.remove("pop");
+    }, 100);
+
+    if (index >= currentCol) {
+        currentCol = index + 1;
+    }
+}
+
 function removeLetter() {
     if (currentCol > 0) {
+        const prevCol = currentCol - 1;
+        const tile = rows[currentRow].children[prevCol];
+
+        if (tile.dataset.hinted === "true") return;
+
         currentCol--;
-
-        const tile = rows[currentRow].children[currentCol];
-
         tile.textContent = "";
     }
 }
 
 function submitGuess() {
+    if (isAnimating) return;
+
     if (currentCol < 5) {
-
         rows[currentRow].classList.add("shake");
-
         setTimeout(() => {
             rows[currentRow].classList.remove("shake");
         }, 300);
-
         return;
     }
 
     let guess = "";
-
     for (let i = 0; i < 5; i++) {
         guess += rows[currentRow].children[i].textContent.toLowerCase();
     }
 
-    //console.log("Guess: ", guess);
     checkGuess(guess);
 }
 
 function checkGuess(guess) {
+    const answerArray = answer.split("");
+    const guessArray = guess.split("");
+    const tileStates = ["wrong", "wrong", "wrong", "wrong", "wrong"];
+
+    for (let i = 0; i < 5; i++) {
+        if (guessArray[i] === answerArray[i]) {
+            tileStates[i] = "correct";
+            answerArray[i] = null;
+            guessArray[i] = null;
+        }
+    }
+
+    for (let i = 0; i < 5; i++) {
+        if (guessArray[i] !== null) {
+            const foundIndex = answerArray.indexOf(guessArray[i]);
+            if (foundIndex !== -1) {
+                tileStates[i] = "present";
+                answerArray[foundIndex] = null;
+            }
+        }
+    }
+
+    isAnimating = true;
+
     for (let i = 0; i < 5; i++) {
         const tile = rows[currentRow].children[i];
-
         const letter = guess[i];
 
-        tile.classList.add("flip");
-
         setTimeout(() => {
-            if (letter === answer[i]) {
-                tile.classList.add("correct");
-            }
-
-            else if (answer.includes(letter)) {
-                tile.classList.add("present");
-            } else {
-                tile.classList.add("wrong");
-
-                markWrongKey(letter);
-            }
+            tile.classList.add("flip");
+            tile.classList.add(tileStates[i]);
+            markKey(letter, tileStates[i]);
         }, i * 200);
-
     }
 
-    if (guess === answer) {
-        setTimeout(() => {
-            showPopup(`You Won! the word was : ${answer}`);
-        }, 100);
-        return;
-    }
+    setTimeout(() => {
+        isAnimating = false;
 
-    currentRow++;
-    currentCol = 0;
+        if (guess === answer) {
+            showPopup("You Won! 🎉");
+            return;
+        }
 
-    if (currentRow === 6) {
-        setTimeout(() => {
-            showPopup(`Game Over ! Word was ${answer}`);
-        }, 100);
-    }
+        currentRow++;
+        currentCol = 0;
+
+        if (currentRow === 6) {
+            showPopup(`Game Over! The word was "${answer.toUpperCase()}"`);
+        }
+    }, 1200);
 }

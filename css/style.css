@@ -17,6 +17,69 @@ body {
     align-items: center;
 }
 
+.start-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: #121213;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+    z-index: 2000;
+}
+
+.start-menu h1 {
+    font-size: 3rem;
+    letter-spacing: 4px;
+}
+
+.btn {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+    width: 220px;
+}
+
+#difficulty {
+    padding: 12px;
+
+    background: #1f1c1c;
+    color: white;
+
+    border: 2px solid #3a3a3c;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+#start {
+    padding: 12px;
+
+    border: none;
+
+    background: #6aaa64;
+    color: white;
+
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#start:hover {
+    opacity: 0.85;
+}
+
 .game-container {
     width: 100%;
 
@@ -31,6 +94,40 @@ body {
 .title {
     font-size: 2.5rem;
     letter-spacing: 4px;
+}
+
+.hint-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#hint-text {
+    font-size: 1.1rem;
+}
+
+#hint-btn {
+    border: none;
+
+    background: #c9b458;
+    color: white;
+
+    padding: 10px 16px;
+    border-radius: 6px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+#hint-btn:hover {
+    opacity: 0.85;
+}
+
+#hint-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .board {
