@@ -3,10 +3,6 @@ const answer = words[Math.floor(Math.random() * words.length)];
 let hintsLeft = 0;
 let isAnimating = false;
 
-// console.log("Answer:", answer); // uncomment to debug
-
-// ─── On-screen keyboard ───────────────────────────────────────────────────────
-
 const keys = document.querySelectorAll(".key");
 
 keys.forEach((key) => {
@@ -23,8 +19,6 @@ keys.forEach((key) => {
     });
 });
 
-// ─── Physical keyboard support ────────────────────────────────────────────────
-
 document.addEventListener("keydown", (e) => {
     if (e.ctrlKey || e.altKey || e.metaKey) return;
 
@@ -39,8 +33,6 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-// ─── Popup ────────────────────────────────────────────────────────────────────
-
 const popup = document.getElementById("popup");
 const popupMessage = document.getElementById("popup-message");
 const newGameBtn = document.getElementById("new-game-btn");
@@ -53,8 +45,6 @@ function showPopup(message) {
 newGameBtn.addEventListener("click", () => {
     location.reload();
 });
-
-// ─── Start menu ───────────────────────────────────────────────────────────────
 
 const startMenu = document.querySelector(".start-menu");
 const gamePage = document.getElementById("game-container");
@@ -79,7 +69,7 @@ startBtn.addEventListener("click", () => {
     } else if (difficulty === "hard") {
         hintsLeft = 1;
     } else {
-        hintsLeft = 0; // hardcore
+        hintsLeft = 0;
     }
 
     updateHintText();
@@ -87,24 +77,18 @@ startBtn.addEventListener("click", () => {
     gamePage.classList.remove("hidden");
 });
 
-// ─── Hint system ──────────────────────────────────────────────────────────────
-
 hintBtn.addEventListener("click", useHint);
 
 function useHint() {
     if (hintsLeft <= 0 || isAnimating) return;
-    if (currentCol >= 5) return; // row already full
+    if (currentCol >= 5) return;
 
-    // Always hint the next position the player would type at (no gaps)
     addLetterAt(currentCol, answer[currentCol].toUpperCase());
 
     hintsLeft--;
     updateHintText();
 }
 
-// ─── Keyboard colour tracking ─────────────────────────────────────────────────
-
-// Priority order: correct > present > wrong (never downgrade a key's colour)
 const keyPriority = { correct: 2, present: 1, wrong: 0 };
 const keyStates = {};
 
